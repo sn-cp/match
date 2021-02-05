@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="mt-5 pt-4 text-center">PortfolioSite</h1>
+
+<button data-toggle="modal" data-target=".bd-example-modal-lg" style="margin: 0 auto;" type="button" class="btn btn-primary d-block my-3 px-5"><i class="fa fa-search">Search</i></button>
+  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="card text-align-center">
+          <div class="card-body">
+            {% include 'match_app/filter.html' %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% if title_or_user or date_min or date_max or tag %}
+<p class="mb-0 text-center font-weight-bold h3">検索結果：{{posts.count}}件</p>
+<table class="table table-bordered">
+  <thead class="thead-light">
+    <tr>
+      <th>タイトル or ユーザー名</th>
+      <th>開始日〜終了日</th>
+      <th>タグを選択</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{request.GET.title_or_user}}</td>
+      <td>{{request.GET.date_min}}〜{{request.GET.date_max}}</td>
+      <td>{{request.GET.tag}}</td>
+    </tr>
+  </tbody>
+</table>
+{% endif %}
+
+<div class="d-flex justify-content-center flex-wrap">
+{% for post in posts%}
+<a href="{% url 'match_app:detail' post_id=post.id %}">
+  <div class="card m-4" style="min-width: 300; max-height: 490;">
+    {% if post.image %}
+    <img style="max-width: 300; max-height: 300;" class="card-img-top" src="{{ post.image.url }}">
+    {% else %}
+    <div class="p-1 border border-secondary text-center pt-5" style="min-width: 300; min-height: 225;">No Image</div>
+    {% endif %}
+    <div class="card-body">
+      <h4 class="card-title">{{post.title|truncatechars:10 | linebreaksbr}}</h4>
+      <p class="card-text">
+        {{ post.text|truncatechars:17 }}
+      </p>
+    </a>
+      <p>#{{post.tag}}</p>
+      <p>{{post.created_at}} |
+      <a href="{% url 'user_app:detail' post.user.id %}">{{post.user.username}}</a></p>
+  </div>
+</div>
+{% endfor %}
+</div>
+{% endblock %}

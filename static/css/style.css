@@ -1,0 +1,18 @@
+html {
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 120px;
+}
+
+footer{
+    width: 100%;
+    background-color: #f3f3f3;
+    color: gray;
+    padding: 17px 0;
+    position: absolute;
+    bottom: 0;
+}
+
+.search{
+    padding: 2.75px 3px;
+}

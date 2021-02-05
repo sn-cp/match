@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}   
+
+<div class="container">
+<h1 class="mt-5 pt-4 text-center">Contact</h1>
+<form action="{% url 'match_app:contact' %}" method="POST">
+ {% csrf_token %}
+ <label for="id_name" class="sr-only">お名前</label>
+ <input class="form-control mb-3" name="name" maxlength="50" required="" id="id_name" type="text" placeholder="お名前">
+
+ <label for="id_email" class="sr-only">メールアドレス</label>
+ <input type="email" name="email" required="" id="id_email" placeholder="メールアドレス" class="form-control mb-3">
+
+ <label for="id_message" class="sr-only">メッセージ:</label>
+ <textarea name="message" cols="40" rows="10" required="" id="id_message" placeholder="メッセージ" class="form-control mb-3"></textarea>
+
+<button type="submit" class="btn btn-block btn-outline-success">Send</button>
+</form>
+</div>
+{% endblock %}
